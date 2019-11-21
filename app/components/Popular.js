@@ -3,6 +3,40 @@ import ReactDOM from 'react-dom'
 import PropTypes from "prop-types"
 import { fetchPopularRepos } from '../utils/api';
 
+function ReposGrid({repos}) {
+    //loop the repos and make a car for each repo returned
+    return (
+        <ul className = 'grid space-around'>
+            {
+                repos.map((r, i) => {
+                    const {name, owner, html_url, stargazers_count, forks, open_issues} = r;
+                    const {login, avatar_url} = owner;
+
+                    return (
+                        <li key={html_url} className= 'repo bg-light'>
+                            <h4 className='header-lg center-text'>
+                                #{i+1}
+                            </h4>
+                            <img
+                                className="avatar"
+                                src={avatar_url}
+                                alt={'Avatar for ${login}'}
+                            />
+                            <h2 className='center-text'>
+                                <a className="link" href={html_url}>{login}</a>
+                            </h2>
+                        </li>
+                    )
+                })
+            }
+        </ul>
+    )
+}
+
+ReposGrid.propTypes = {
+    repos: PropTypes.array.isRequired
+}
+
 function LanguagesNav({selected, onUpdateLanguage}) {
     const langs = ["All", "JavaScript","R","Java", "CSS","Python"];
     return (
@@ -84,7 +118,7 @@ export default class Popular extends React.Component {
                 /> 
                 {this.isLoading() && <p>LOADING!</p>}
                 {error && <p>{error}</p>}
-                {repos[selectedLanguage] && <pre>{JSON.stringify(repos[selectedLanguage], null, 2)}</pre>}
+                {repos[selectedLanguage] && <ReposGrid repos={repos[selectedLanguage]}/>}
             </React.Fragment>
         )
         
