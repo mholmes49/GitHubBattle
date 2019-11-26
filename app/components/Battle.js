@@ -123,10 +123,16 @@ export default class Battle extends React.Component {
             playerTwo: null
         }
         this.handleSubmit = this.handleSubmit.bind(this)
+        this.handleReset = this.handleReset.bind(this)
     }
     handleSubmit (id, player) {
         this.setState({
             [id]:player
+        })
+    }
+    handleReset(id) {
+        this.setState({
+            [id]:null
         })
     }
     render() {
@@ -140,12 +146,12 @@ export default class Battle extends React.Component {
                         {playerOne===null ? (
                             <PlayerInput onSubmit={(player)=>this.handleSubmit("playerOne", player)} label="Player One"/>
                         ) :(
-                            <PlayerPreview label="Player One" username={this.state.playerOne} onReset={()=>console.log("reset")}/>
+                            <PlayerPreview label="Player One" username={this.state.playerOne} onReset={()=>this.handleReset("playerOne")}/>
                         )}
                         {playerTwo===null ?(
                             <PlayerInput onSubmit={(player)=>this.handleSubmit("playerTwo", player)} label="Player Two"/>
                         ) :(
-                            <PlayerPreview label="Player Two" username={this.state.playerTwo} onReset={()=>console.log("reset")}/>
+                            <PlayerPreview label="Player Two" username={this.state.playerTwo} onReset={()=>this.handleReset("playerTwo")}/>
                         )}
                     </div>
                 </div>
