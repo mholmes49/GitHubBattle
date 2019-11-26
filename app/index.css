@@ -201,6 +201,10 @@ html, body, #app {
 	color: #e6e6e6;
 	background: #141414;
   }
+
+  .btn-space{
+	  margin: 40px auto;
+  }
   
   .dark-btn:disabled {
 	background: #f2f2f2;
