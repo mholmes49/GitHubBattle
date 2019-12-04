@@ -2,34 +2,41 @@ import React from 'react'
 import { FaUserFriends, FaFighterJet, FaTrophy, FaTimesCircle } from 'react-icons/fa'
 import PropTypes from "prop-types"
 import Results from "./Results.js"
+import {ThemeConsumer} from "../contexts/Theme"
 
 function Instructions() {
     return (
-        <div className="instructions-container"> 
-            <h1 className='center-text header-lg'> 
-                Instructions 
-            </h1>
-            <ol className='container-sm grid center-text battle-instructions'>
-                <li>
-                    <h3 className="header-sm">
-                        Enter 2 Github users
-                    </h3>
-                    <FaUserFriends className='bg-lite' color='rgb(255,191,116)' size={140}/>
-                </li>
-                <li>
-                    <h3 className="header-sm">
-                         Battle
-                    </h3>
-                    <FaFighterJet className='bg-lite' color='#72,72,72' size={140}/>
-                </li>
-                <li>
-                    <h3 className="header-sm">
-                        See the winners
-                    </h3>
-                    <FaTrophy className='bg-lite' color='rgb(255, 215,0)' size={140}/>
-                </li>
-            </ol>
-        </div>
+        <ThemeConsumer>
+            {({theme})=>(
+                <div className="instructions-container"> 
+                    <h1 className='center-text header-lg'> 
+                        Instructions 
+                    </h1>
+                    <ol className='container-sm grid center-text battle-instructions'>
+                        <li>
+                            <h3 className="header-sm">
+                                Enter 2 Github users
+                            </h3>
+                            <FaUserFriends className={`bg-${theme}`} color='rgb(255,191,116)' size={140}/>
+                        </li>
+                        <li>
+                            <h3 className="header-sm">
+                                Battle
+                            </h3>
+                            <FaFighterJet className={`bg-${theme}`} color='#72,72,72' size={140}/>
+                        </li>
+                        <li>
+                            <h3 className="header-sm">
+                                See the winners
+                            </h3>
+                            <FaTrophy className={`bg-${theme}`} color='rgb(255, 215,0)' size={140}/>
+                        </li>
+                    </ol>
+                </div>
+            )}
+
+        </ThemeConsumer>
+        
     )
 }
 function PlayerPreview ({ username, onReset, label }) {
@@ -83,30 +90,34 @@ class PlayerInput extends React.Component {
 
     render() {
         return ( 
-            <form className="column player" onSubmit={this.handleSubmit}>
-                <label htmlFor='username' className="player-label">
-                    {this.props.label}
-                </label>
-                <div className="row player-inputs">
-                    <input 
-                        type='text'
-                        id='username'
-                        className="input-light"
-                        placeholder="github username"
-                        autoComplete='off'
-                        value={this.state.username}
-                        onChange={this.handleChange}
-                    />
-                    <button 
-                        className="btn dark-btn" 
-                        type="submit"
-                        disabled={!this.state.username}
-                    > 
-                        Submit
-                    </button>
-                </div>
-
-            </form>
+            <ThemeConsumer>
+                {({theme})=>(
+                    <form className="column player" onSubmit={this.handleSubmit}>
+                        <label htmlFor='username' className="player-label">
+                            {this.props.label}
+                        </label>
+                        <div className="row player-inputs">
+                            <input 
+                                type='text'
+                                id='username'
+                                lassName={`input-${theme}`}
+                                placeholder="github username"
+                                autoComplete='off'
+                                value={this.state.username}
+                                onChange={this.handleChange}
+                            />
+                            <button 
+                                className={`btn ${theme === 'dark' ? 'light-btn' : 'dark-btn'}`}
+                                type="submit"
+                                disabled={!this.state.username}
+                            > 
+                                Submit
+                            </button>
+                        </div>
+        
+                    </form>
+                )}
+            </ThemeConsumer>
         )
     }
 }

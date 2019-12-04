@@ -5,6 +5,7 @@ import { fetchPopularRepos } from '../utils/api';
 import { FaUser, FaStar, FaCodeBranch, FaExclamationTriangle } from 'react-icons/fa'
 import Card from "./Card"
 import Loading from "./Loading"
+import {ThemeConsumer} from "../contexts/Theme"
 
 function ReposGrid({repos}) {
     //loop the repos and make a car for each repo returned
